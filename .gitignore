@@ -1,0 +1,34 @@
+# Ignore OS generated files
+.DS_Store                 # macOS
+Thumbs.db                 # Windows
+
+# Ignore log files
+*.log
+
+# Ignore backup files
+*~                        # Backup files (e.g., vim)
+*.bak                     # Backup files
+
+# Ignore temporary files
+tmp/                      # Temporary files directory
+*.tmp                     # Temporary files
+
+# Ignore compiled files
+*.o                       # Object files
+*.out                     # Executable files
+*.exe                     # Executables for Windows
+*.class                   # Java class files
+
+# Ignore specific IDE or editor files
+.vscode/                  # Visual Studio Code
+.idea/                    # IntelliJ IDEA
+*.sublime-project         # Sublime Text
+*.sublime-workspace       # Sublime Text
+*.swp                     # Vim swap files
+
+# Ignore specific configuration files
+*.env                     # Environment variable files
+
+# Ignore other specific files
+*.tar.gz                  # Compressed files
+*.zip                     # Zip files
