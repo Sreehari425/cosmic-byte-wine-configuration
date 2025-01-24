@@ -86,7 +86,7 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
       
       1. `sudo pacman -S winetricks`
 
-3. **Install Microsoft Visual C++ Redistributable**
+3. **Install Microsoft Visual C++ Redistributable(optional)**
    
    1. Go to your browser and go to  Visual C++ Redistributable Runtimes All-in-One and select the website www.techpowerup.com
    
@@ -98,7 +98,7 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
    
    5. Note: You could use any other Visual C++ Redistributable Runtimes All-in-One the above one is just an example
 
-4. **Install Microsoft WebView2**
+4. **Install Microsoft WebView2(optional)**
    
    1. `winetricks webview2`
 
