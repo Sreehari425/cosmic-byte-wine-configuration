@@ -1,5 +1,5 @@
 ---
- 
+
 ---
 
 # Cosmic Byte Device Configuration Guide
@@ -7,8 +7,6 @@
 ## Disclaimer
 
   **This guide is independent and not affiliated with or endorsed by Cosmic Byte. The Cosmic Byte software remains the property of Cosmic Byte, and users are responsible for downloading it from the official website. This guide simply assists users in configuring the software on Linux via Wine.**
-
-
 
 ## Table of Contents
 
@@ -128,7 +126,7 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
    
    ## Configuration Steps
 
-1. **Identify the Keyboard**
+8. **Identify the Keyboard**
    
    1. List USB devices to ensure the Cosmic Byte keyboard is recognized by the system:
    
@@ -144,7 +142,7 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
       
       2. Look for `bInterfaceClass` if it says `Human Interface Device` you are good to continue
 
-2. **Create Udev Rule for HID Permissions**
+9. **Create Udev Rule for HID Permissions**
    
    1.   Create a udev rule to allow proper access to the HIDRAW device
       
@@ -167,8 +165,18 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
             1. `wine path/to/cosmicbyte.exe`
          
          2. Check if the software detects the keyboard and allows configuration
-
-
+   
+   2. Reload Udev Rules in Case of Detection Issues
+      
+      1. If your Cosmic Byte device  is not detected after suspend or in rare cases, you may need to reload the udev rules. To do this:
+      
+      2. Run the following commands:
+         
+         1. `sudo udevadm control --reload-rules`
+         
+         2. `sudo udevadm trigger`
+      
+      3. After reloading the rules, try launching the Cosmic Byte software again to check if the keyboard is detected.
 
 ### Testing and Validation
 
