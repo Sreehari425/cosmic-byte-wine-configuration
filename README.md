@@ -32,7 +32,7 @@
 
 ## Introduction
 
-This guide provides step-by-step instructions for configuring Cosmic Byte devices on Linux using Wine. It focuses on enabling device detection and functionality for applications that require proprietary drivers.
+This guide provides step-by-step instructions for configuring Cosmic Byte devices on Linux using Wine. It focuses on enabling device detection and functionality for applications that require proprietary software.
 
 **<u>*Note : This only works with devices which uses human device interface(HID</u>)***
 
@@ -129,6 +129,8 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
 8. **Identify the Keyboard**
    
    1. List USB devices to ensure the Cosmic Byte keyboard is recognized by the system:
+      
+      1. Command : `lsusb`
    
    2. Note down the **Vendor ID** and **Product ID** (vendor_id:product_id)
       
@@ -150,7 +152,21 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
       
       2. Add the following content, replacing the Vendor ID and Product ID:
          
-         1. `SUBSYSTEM=="hidraw", ATTR{idVendor}=="1234", ATTR{idProduct}=="5678", MODE="0666"`
+         1. `SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1234", ATTRS{idProduct}=="5678", MODE="0660", GROUP="plugdev"`
+         2. This grants read and write permissions to members of the **plugdev group**.
+         3. Adding your user to group
+            1. `sudo usermod -aG plugdev $USER`
+            2. if plugdev dosent exist in your system run
+               1. `sudo groupadd plugdev`
+               2. Add your user to group
+                  1. `sudo usermod -aG plugdev $USER`
+         4. **Alternatively:** Restrict it to a specific user (recommended for single-user systems):
+            1. `SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1234", ATTRS{idProduct}=="5678", MODE="0660", OWNER="yourusername"`
+         5. ⚠️ **Not Recommended Method (Less Secure):**
+            1. Granting full access to **all users** (potential security risk):
+            2. `SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1234", ATTRS{idProduct}=="5678", MODE="0666"`
+            3. This makes the device accessible to **any user or application**.
+            4. **Not recommended** unless you are fully aware of the risks involved.
       
       3. **Reload Udev Rules**
          
@@ -175,6 +191,8 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
          1. `sudo udevadm control --reload-rules`
          
          2. `sudo udevadm trigger`
+         
+         3. **NOTE**: on X11 desktop reloading udev can crash the desktop
       
       3. After reloading the rules, try launching the Cosmic Byte software again to check if the keyboard is detected.
 
@@ -190,28 +208,24 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
 
 ### Warnings and Security Risks
 
-- **Permissions**: Setting `MODE="0666"` allows all users to read/write to the device. Consider using stricter permissions for security (`0660`), or limit access to a specific user group.
+- **Permissions**: Setting `MODE="0666"` allows all users to read/write to the device. which is highly discouraged Consider using stricter permissions for security (`0660`), or limit access to a specific user group, to increase security you could use **AppArmor** or **SELinux** to limit which applications can interact with specific devices.
 
 - **Running Windows Applications**: Wine does not isolate Windows programs as well as virtual machines, so be cautious of running untrusted software.
 
 - **USB Device Access**: Ensure only necessary devices have access through udev rules to prevent potential security risks.
 
-### Tested Systems
+### While this guide should work on other Linux distributions and desktop environments, compatibility may vary depending on hardware and software configurations. For best results, ensure your system is updated and configured similarly.
 
-This guide has been tested on the following systems:
+### Tested Devices
 
-- **Operating System**: Arch Linux (6.10.10-zen1-1-zen Kernel)
-- **Desktop Environment**: KDE Plasma 6.1.5
-- **Wine Version**: 9.18
-- **Hardware**: 
-  - **CPU**: Intel Core i5-4440s
-  - **GPU**: AMD RX 570
-  - **RAM**: 12 GB
-  - **Peripherals**: Cosmic Byte CBGK-15 (INSTANT USB Keyboard)
+The following Cosmic Byte devices have been tested and confirmed to work with this guide. Compatibility with other models may vary.
 
-While this guide should work on other Linux distributions and desktop environments, compatibility may vary depending on hardware and software configurations. For best results, ensure your system is updated and configured similarly.
+| Device Model                       | Interface Type | Software Version | Status  | OS         | Wine Version | Remarks                                 | Credits                                       |
+| ---------------------------------- | -------------- | ---------------- | ------- | ---------- | ------------ | --------------------------------------- | --------------------------------------------- |
+| CBGK-15 (INSTANT USB Keyboard)     | HID (hidraw)   | 2020             | Working | Arch Linux | 10.4         | All lighting and macro functions tested | [Sreehari425](https://github.com/Sreehari425) |
+| Ant-esport GM320 V2 (Gaming Mouse) | HID (hidraw)   | 2.0.0            | Working | Linux Mint | 10.0         | Button remapping and lighting tested    | [Mrmayman](https://github.com/Mrmayman)       |
 
-### Conclusion
+#### ### Conclusion
 
 - **Please note that while this guide provides a solution for many Cosmic Byte devices, compatibility with all models or other vendor keyboards is not guaranteed. If you experience issues, check for additional dependencies or specific configurations for your device.**
 
