@@ -218,7 +218,7 @@ This guide provides step-by-step instructions for configuring Cosmic Byte device
 
 ### Tested Devices
 
-The following Cosmic Byte devices have been tested and confirmed to work with this guide. Compatibility with other models may vary.
+The following Cosmic Byte/Other devices have been tested and confirmed to work with this guide. Compatibility with other models may vary.
 
 | Device Model                       | Interface Type | Software Version | Status  | OS         | Wine Version | Remarks                                 | Credits                                       |
 | ---------------------------------- | -------------- | ---------------- | ------- | ---------- | ------------ | --------------------------------------- | --------------------------------------------- |
